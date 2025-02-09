@@ -24,12 +24,12 @@ jobs:
       uses: "stCarolas/setup-maven@v5"
       with:
         maven-version: "3.9.9"
+    - run: "sudo apt-get install -y build-essential zlib1g-dev"
+    - run: "mvn -s settings.xml spotless:check install"
+    - run: "mvn -s settings.xml -Pnative package"
     - name: "Initialize CodeQL"
       uses: "github/codeql-action/init@v3"
       with:
         languages: "${{ matrix.language }}"
-    - run: "sudo apt-get install -y build-essential zlib1g-dev"
-    - run: "mvn -s settings.xml spotless:check install"
-    - run: "mvn -s settings.xml -Pnative package"
     - name: "Perform CodeQL Analysis"
       uses: "github/codeql-action/analyze@v3"

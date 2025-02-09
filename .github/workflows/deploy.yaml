@@ -31,3 +31,4 @@ jobs:
         generate_release_notes: "true"
         make_latest: "true"
         token: "${{ secrets.GH_TOKEN }}"
+        files: "target/mvn-cleaner"

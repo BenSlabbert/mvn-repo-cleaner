@@ -1,5 +1,5 @@
 ---
-name: "Java + Maven"
+name: "Deploy"
 "on":
   create:
     tags:

@@ -21,4 +21,13 @@ jobs:
       uses: "stCarolas/setup-maven@v5"
       with:
         maven-version: "3.9.9"
+    - run: "git fetch --prune --unshallow --tags"
+    - run: "sudo apt-get install -y build-essential zlib1g-dev"
     - run: "mvn -s settings.xml spotless:check deploy -DskipTests=true"
+    - run: "mvn -s settings.xml -Pnative package"
+    - name: "Release"
+      uses: "softprops/action-gh-release@v2"
+      with:
+        generate_release_notes: "true"
+        make_latest: "true"
+        token: "${{ secrets.GH_TOKEN }}"

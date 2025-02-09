@@ -1,6 +1,8 @@
 /* Licensed under Apache-2.0 2025. */
 package github.benslabbert.mvnrepocleaner;
 
+import static java.util.Objects.requireNonNull;
+
 import com.vdurmont.semver4j.Semver;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -44,11 +46,11 @@ public class Main {
       Path key = entry.getKey();
       Set<Semver> semvers = entry.getValue();
       List<Semver> sortedVersions = semvers.stream().sorted(Semver::compareTo).toList().reversed();
-      System.err.printf("key: %s versions: %s%n", key, sortedVersions);
+      System.err.printf("dir: %s versions: %s%n", key, sortedVersions);
 
       if (3 < sortedVersions.size()) {
         System.err.printf(
-            "dir %s has 3 or more versions, removing the oldest and keeping the last 2", key);
+            "dir %s has 3 or more versions, removing the oldest and keeping the last 2%n", key);
         List<Semver> versionsToDelete = sortedVersions.stream().skip(2).toList();
         for (Semver semver : versionsToDelete) {
           Path resolve = key.resolve(semver.toString());
@@ -101,6 +103,11 @@ public class Main {
           public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
               throws IOException {
             if (attrs.isRegularFile()) {
+              System.err.println("delete file: " + file);
+              Files.delete(file);
+            }
+            if (attrs.isDirectory() && requireNonNull(file.toFile().listFiles()).length == 0) {
+              System.err.println("delete empty directory: " + file);
               Files.delete(file);
             }
             return FileVisitResult.CONTINUE;

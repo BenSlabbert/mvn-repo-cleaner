@@ -27,7 +27,7 @@
     <mainClass>github.benslabbert.mvnrepocleaner.Main</mainClass>
     <native.maven.plugin.version>0.10.6</native.maven.plugin.version>
     <semver4j.version>3.1.0</semver4j.version>
-    <spotless.version>2.44.5</spotless.version>
+    <spotless.version>2.45.0</spotless.version>
   </properties>
 
   <dependencies>

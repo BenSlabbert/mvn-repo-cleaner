@@ -26,7 +26,7 @@ jobs:
     - run: "mvn -s settings.xml spotless:check deploy -DskipTests=true"
     - run: "mvn -s settings.xml -Pnative package"
     - name: "Release"
-      uses: "softprops/action-gh-release@v2"
+      uses: "softprops/action-gh-release@v3"
       with:
         generate_release_notes: "true"
         make_latest: "true"
